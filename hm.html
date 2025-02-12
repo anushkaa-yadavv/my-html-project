@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPEN IT WHEN...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, black, #24243e);
+            color: cyan;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(26, 26, 26, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 255, 255, 0.6);
+            border: 2px solid cyan;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(to right, #00b4db, #0083b0);
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px cyan;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: cyan;
+            white-space: pre-line;
+        }
+        .scroll-down {
+            display: none;
+            margin-top: 10px;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .scroll-down:hover {
+            background: linear-gradient(to right, #00b4db, #0083b0);
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid cyan;
+            background-color: #1a1a1a;
+            color: cyan;
+            font-size: 16px;
+            resize: none;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.8); /* Black with opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+            color: black; /* Ensure text is readable */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #missMeMessage {
+            white-space: pre-line;
+            font-size: 1.2em; /* Adjust for larger text */
+            font-weight: normal;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>HEY BABES OPEN IT WHEN...💗</h2>
+        <button onclick="showMessage('You need motivation')">You need motivation</button>
+        <button onclick="openNoteSection()">You are bored</button>
+        <button onclick="showMissMeMessage()">You miss me</button>
+        <button onclick="showMessage('You need a smile')">You are sad</button>
+        <p id="message"></p>
+        <button id="scrollButton" class="scroll-down" onclick="scrollDown()">Scroll Down ⬇️</button>
+        <div id="noteSection" style="display:none;" class="fade-in">
+            <h3>Write a Note for Me 💙</h3>
+            <textarea id="note" placeholder="Type something..."></textarea>
+            <button onclick="saveNote()">Save Note</button>
+            <p id="savedNote" class="fade-in"></p>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="missMeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeMissMeMessage()">&times;</span>
+            <p id="missMeMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("missMeModal");
+
+        // Function to show the modal with the "You miss me" message
+        function showMissMeMessage() {
+            var missMeMessage = `Since you are missing me, here's a big huggieeee for youuu loml! ❤️🤗
+
+⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣫⣉⣭⣶⣷⣇⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣕⠙⡻⠿⢟⣾⣿⣿⣿⣿⣿⣿⣿⡿⠿⠟⠛⠛⠛⠛⠛⠻⠿⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣷⣶⣿⣿⣿⠏⠉⠉⠙⣉⣤⣴⣶⣿⣿⣿⣿⣿⣿⣿⣶⣶⡈⢫⣭⣥⡂⣼⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠏⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡺⡏⡁⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⢋⣡⣤⣶⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠘⣿⣿⣿⣿⣿
+⣿⠿⠿⠛⠛⢡⣴⣿⣿⣿⡟⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⢺⣿⣿⣿⣿
+⡇⢰⣶⠋⣰⣿⣿⣿⣿⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿
+⣷⠘⡏⣰⣿⣿⣿⣿⣿⣿⡇⢹⣿⣿⣿⣿⣿⣿⣿⣿⣏⣐⣚⣟⣭⣻⣿⣿⣿⣿⣿⣿⣟⣿⠀⣿⣿⣿⣿
+⣿⣷⠀⣿⣿⣿⣿⣿⣿⣿⣷⢘⡿⡄⣀⣿⣍⢠⠡⣿⣿⣿⣿⣷⣿⣾⣿⣿⣿⣿⣿⡿⣹⠏⣸⣿⣿⣿⣿
+⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⠘⢿⣼⣿⣿⣿⣎⠃⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⠽⢋⣴⣿⠿⢿⣿⣿
+⣿⣿⡆⢻⣿⣿⣿⣿⣿⣿⣿⣆⡣⡻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣭⣭⣀⢄⡙⠻⠏⣰⠀⣿⣿
+⣿⣿⣿⡀⢝⢿⣿⣿⣿⣿⣿⣿⣧⣌⡑⠚⠛⠛⣉⣩⣭⣤⣬⣿⣿⣿⣿⣿⣿⣿⣿⣿⣮⡳⡄⠫⣰⣿⢧
+⣿⣿⣿⣿⣄⠑⠭⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠘⠛⠿⠿⠿⠛⢋⣩⣤⡄⢹⣿⣿⣿⣿⣿⣿⡜⡄⢻⣿⣸
+⣿⣿⣿⣿⣿⣿⣶⣤⣭⣉⣉⢉⡉⣤⣤⣾⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⣡⣾⣿⣿⣿⣿⣿⣿⣷⡣⡸⠳⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⣼⣸⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣶⡄⣿⣿⣿⣿⣿⣿⣿⡿⡿⣿⣿⣖⣷⠈
+⣿⣿⣿⣿⣿⣿⣿⠃⣠⣈⠀⠇⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⣍⣉⡉⠉⣉⣉⡤⠄⣷⣯⣤⢤⣤⣾
+⣿⣿⣿⣿⣿⣿⣿⣷⣈⠛⠿⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⣿⣶⣤⣬⣥⣴⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠠⢽⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡆⢡⢠⡄⢠⣤⡄⢻⣿⣿⠇⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⢻⣿⣿⣿⣷⣈⣘⣁⣿⣿⣿⣅⠙⢋⣰⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣾⣿⣿⣿⣿⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+                `;
+            document.getElementById("missMeMessage").innerText = missMeMessage;
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeMissMeMessage() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function showMessage(type) {
+            let messages = {
+                'You need motivation': "You're one of the strongest people I know!\nI believe in you, and I pray that you achieve your dreams and have an incredible future.\nKeep going! Keep pushing forward! Never give up!💪",
+                'You need a smile': "Teri hansi ka asar kuch aisa hai,\nJaise andheri raat mein jugnu ka faisla hai.\nJo bhi dekhe, bas dekhte hi reh jaaye,\nJaise beparwah leharon ka kinare se rishta ban jaaye.\nMuskurata rehna har pal, ye ada kho na jaaye,\nKyunki teri hansi se hi toh duniya roshan ho jaaye!😊💖"
+            };
+            if (type !== 'You miss me') {
+                document.getElementById("message").innerText = messages[type];
+            } else {
+                document.getElementById("message").innerText = ""; // Clear the message if "You miss me" is clicked
+            }
+            document.getElementById("noteSection").style.display = "none";
+            document.getElementById("scrollButton").style.display = "none";
+        }
+
+        function scrollDown() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }
+
+        function openNoteSection() {
+            document.getElementById("noteSection").style.display = "block";
+            document.getElementById("message").innerText = "";
+            document.getElementById("scrollButton").style.display = "none";
+            let savedNote = localStorage.getItem("userNote");
+            if (savedNote) {
+                document.getElementById("savedNote").innerText = "Saved Note: " + savedNote;
+            }
+            document.getElementById("noteSection").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function saveNote() {
+            let note = document.getElementById("note").value;
+            localStorage.setItem("userNote", note);
+            document.getElementById("savedNote").innerText = "Saved Note: " + note;
+        }
+    </script>
+</body>
+</html>
